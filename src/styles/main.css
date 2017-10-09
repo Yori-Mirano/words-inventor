@@ -13,37 +13,50 @@ body, textarea {
 
 
 header {
-  background:   linear-gradient(to right top, #03A9F4, #4DD0E1);
+  position:     relative;
+  background:   linear-gradient(to right top, #03A9F4, #5313cb);
   color:        #fff;
   box-sizing:   border-box;
-  padding:      0 10px;
+  padding:      0 20px;
   line-height:  64px;
   font-size:    2rem;
   font-weight:  lighter;
+  box-shadow:   0 0 10px rgba(0,0,0,0.5);
+}
+
+header > .icon {
+  font-size: 1.5em;
+  vertical-align: sub;
+}
+
+#container {
+  display:  flex;
+  height:   calc(100vh - 64px);
 }
 
 @media (max-width: 480px) {
   header {
-    font-size:    1.4rem;
+    font-size: 1.1rem;
+    line-height: 48px;
   }
-}
 
-#container {
-  display:    flex;
-  height:     calc(100vh - 64px);
+  #container {
+    display:  flex;
+    height:   calc(100vh - 48px);
+  }
 }
 
 #container > * {
   flex:       1;
   box-sizing: border-box;
-  padding:    10px;
+  padding:    20px;
   overflow:   auto;
 }
 
 
-@media (max-width: 300px) {
-  #container { flex-direction: column; }
-  #container > * { height: 50vh; }
+@media (max-width: 400px) {
+  #container      { flex-direction: column; }
+  #container > *  { height: 50vh; }
 }
 
 
@@ -54,12 +67,14 @@ header {
   border:     none;
   outline:    none;
   text-align: right;
+  direction:  rtl;
 }
 
 
 #new-word-list {
-  background:   #eee;
+  flex:         2;
+  background:   #f4f4f4;
   white-space:  pre-line;
-  column-width: 150px;
-  column-fill: auto;
+  column-width: 130px;
+  column-fill:  auto;
 }
