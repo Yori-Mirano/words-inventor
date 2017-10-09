@@ -15,3 +15,5 @@ var update = function () {
 wordListEl.addEventListener('keyup', update);
 
 update();
+
+wordListEl.focus();

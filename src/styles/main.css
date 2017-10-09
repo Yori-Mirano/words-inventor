@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,900');
 
 
 
@@ -12,14 +12,29 @@ body, textarea {
 }
 
 
+header {
+  background:   linear-gradient(to right top, #03A9F4, #4DD0E1);
+  color:        #fff;
+  box-sizing:   border-box;
+  padding:      0 10px;
+  line-height:  64px;
+  font-size:    2rem;
+  font-weight:  lighter;
+}
+
+@media (max-width: 480px) {
+  header {
+    font-size:    1.4rem;
+  }
+}
 
 #container {
   display:    flex;
+  height:     calc(100vh - 64px);
 }
 
 #container > * {
   flex:       1;
-  height:     100vh;
   box-sizing: border-box;
   padding:    10px;
   overflow:   auto;
@@ -35,11 +50,16 @@ body, textarea {
 
 #word-list {
   background: #fff;
+  color:      #03A9F4;
   border:     none;
   outline:    none;
+  text-align: right;
 }
+
 
 #new-word-list {
   background:   #eee;
   white-space:  pre-line;
+  column-width: 100px;
+  column-fill: auto;
 }

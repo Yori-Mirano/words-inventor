@@ -89,7 +89,7 @@
   WordsGenerator.prototype.generate = function () {
     var
       wordListAnalysis = this.analysis,
-      wordNumber = 30,
+      wordNumber = 100,
       wordLength = 6,
       newWordList = [],
       newWord, nextChar, rnd, charWeight,
