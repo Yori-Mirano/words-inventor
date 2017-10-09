@@ -104,11 +104,13 @@
    */
   WordsGenerator.prototype.generate = function () {
     var
+      wordList    = this.wordList,
       analysis    = this.analysis,
-      wordNumber  = 100,
+      wordNumber  = 1000,
       wordLength  = 15,
       newWordList = [],
       uniqueNewWordList = [],
+      newNewWordList = [],
       newWord, nextChar, rnd, charWeight,
       charPosition, i, j;
 
@@ -121,7 +123,7 @@
       for (charPosition = 0; charPosition < wordLength; charPosition += 1) {
         rnd = Math.random();
 
-        if (!analysis[nextChar][i]) {
+        if (!analysis[nextChar] || !analysis[nextChar][i]) {
           break;
         }
 
@@ -148,10 +150,14 @@
     }
 
     uniqueNewWordList = newWordList.filter(function(item, pos){
-      return newWordList.indexOf(item)== pos;
+      return newWordList.indexOf(item) == pos;
     })
 
-    return uniqueNewWordList;
+    newNewWordList = uniqueNewWordList.filter(function(item, pos){
+      return wordList.indexOf(item) == -1;
+    })
+
+    return newNewWordList;
   };
 
 
