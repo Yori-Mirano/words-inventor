@@ -1,5 +1,5 @@
 /*global
-    WordsGenerator
+    WordsInventor
 */
 
 (function () {
@@ -8,7 +8,7 @@
   var
     wordListEl    = document.getElementById('word-list'),
     newWordListEl = document.getElementById('new-word-list'),
-    wordGenerator = new WordsGenerator(),
+    wordsInventor = new WordsInventor(),
     wordListText,
     wordList,
     newWordList,
@@ -18,7 +18,7 @@
   generate = function () {
     wordListText  = wordListEl.value;
     wordList      = wordListText.split(/\s+/);
-    newWordList   = wordGenerator.generate(wordList);
+    newWordList   = wordsInventor.invent(wordList);
     newWordListEl
       .innerHTML  = newWordList.join('\n');
   };

@@ -7,7 +7,7 @@
    * [[Description]]
    * @param {[[Type]]} wordList [[Description]]
    */
-  var WordsGenerator = function (wordList) {
+  var WordsInventor = function (wordList) {
     this.wordList = wordList || [];
     this.analysis = {};
 
@@ -20,7 +20,7 @@
    * [[Description]]
    * @returns {[[Type]]} [[Description]]
    */
-  WordsGenerator.prototype.analyse = function (wordList) {
+  WordsInventor.prototype.analyse = function (wordList) {
     if (typeof wordList !== 'undefined') {
       this.wordList = wordList;
     } else {
@@ -72,7 +72,7 @@
   /**
    * [[Description]]
    */
-  WordsGenerator.prototype.normalize = function (analysis) {
+  WordsInventor.prototype.normalize = function (analysis) {
     var
       sum, veryLeftChar, leftChar,
       i, j, k;
@@ -108,7 +108,7 @@
   /**
    * [[Description]]
    */
-  WordsGenerator.prototype.generate = function (wordList) {
+  WordsInventor.prototype.invent = function (wordList) {
     if (typeof wordList !== 'undefined') {
       this.analyse(wordList);
     } else {
@@ -173,5 +173,5 @@
 
 
 
-  window.WordsGenerator = WordsGenerator;
+  window.WordsInventor = WordsInventor;
 }());
