@@ -12,20 +12,30 @@
     wordListText,
     wordList,
     newWordList,
-    generate;
+    invent,
+    focusAtEnd;
 
 
-  generate = function () {
+  invent = function () {
     wordListText  = wordListEl.value;
-    wordList      = wordListText.split(/\s+/);
+    wordList      = wordListText.split(/[\s,]+/);
     newWordList   = wordsInventor.invent(wordList);
     newWordListEl
       .innerHTML  = newWordList.join('\n');
   };
 
 
-  wordListEl.addEventListener('keyup', generate);
-  wordListEl.focus();
-  generate();
+  focusAtEnd = function (inputEl) {
+    inputEl.focus();
+    var value     = inputEl.value;
+    inputEl.value = '';
+    inputEl.value = value;
+  };
+
+
+  wordListEl.addEventListener('keyup', invent);
+  invent();
+
+  focusAtEnd(wordListEl);
 
 }());

@@ -66,8 +66,8 @@ header > .icon {
   color:      #03A9F4;
   border:     none;
   outline:    none;
-  text-align: right;
-/*  direction:  rtl;*/
+  word-spacing: 1em;
+  line-height: 1.5em;
 }
 
 
