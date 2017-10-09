@@ -106,13 +106,13 @@
     var
       analysis    = this.analysis,
       wordNumber  = 100,
-      wordLength  = 20,
+      wordLength  = 15,
       newWordList = [],
       uniqueNewWordList = [],
       newWord, nextChar, rnd, charWeight,
       charPosition, i, j;
 
-    while ((wordNumber -= 1) >= 0) {
+    while (wordNumber >= 0) {
       newWord = '';
       nextChar = 0;
       i = 0;
@@ -121,7 +121,7 @@
       for (charPosition = 0; charPosition < wordLength; charPosition += 1) {
         rnd = Math.random();
 
-        if (!analysis[nextChar]) {
+        if (!analysis[nextChar][i]) {
           break;
         }
 
@@ -139,7 +139,12 @@
         i = j;
       }
 
-      newWordList.push(newWord);
+      if (newWord.length < wordLength) {
+        newWordList.push(newWord);
+        wordNumber -= 1;
+      } else {
+        continue;
+      }
     }
 
     uniqueNewWordList = newWordList.filter(function(item, pos){
