@@ -1,19 +1,31 @@
-var wordListEl = document.getElementById('word-list');
+/*global
+    WordsGenerator
+*/
 
-var update = function () {
-  var wordListText = wordListEl.value;
-  var wordList = wordListText.split(/\s+/u);
+(function () {
+  'use strict';
 
-  var wordGenerator = new WordsGenerator(wordList);
-  var newWordList   = wordGenerator.generate();
+  var
+    wordListEl    = document.getElementById('word-list'),
+    newWordListEl = document.getElementById('new-word-list'),
+    wordGenerator = new WordsGenerator(),
+    wordListText,
+    wordList,
+    newWordList,
+    generate;
 
 
-  var newWordListEl = document.getElementById('new-word-list');
-  newWordListEl.innerHTML = newWordList.join('\n');
-};
+  generate = function () {
+    wordListText  = wordListEl.value;
+    wordList      = wordListText.split(/\s+/);
+    newWordList   = wordGenerator.generate(wordList);
+    newWordListEl
+      .innerHTML  = newWordList.join('\n');
+  };
 
-wordListEl.addEventListener('keyup', update);
 
-update();
+  wordListEl.addEventListener('keyup', generate);
+  wordListEl.focus();
+  generate();
 
-wordListEl.focus();
+}());

@@ -8,7 +8,7 @@
    * @param {[[Type]]} wordList [[Description]]
    */
   var WordsGenerator = function (wordList) {
-    this.wordList = wordList;
+    this.wordList = wordList || [];
     this.analysis = {};
 
     this.analyse(wordList);
@@ -20,13 +20,19 @@
    * [[Description]]
    * @returns {[[Type]]} [[Description]]
    */
-  WordsGenerator.prototype.analyse = function () {
+  WordsGenerator.prototype.analyse = function (wordList) {
+    if (typeof wordList !== 'undefined') {
+      this.wordList = wordList;
+    } else {
+      wordList = this.wordList;
+    }
+
     var
-      wordList          = this.wordList,
-      wordListAnalysis  = {},
+      wordListAnalysis = {},
       word, wordIndex, wordListLength,
       charIndex, wordLength,
       charCode, i, j, k;
+
 
     for (wordIndex = 0, wordListLength = wordList.length; wordIndex < wordListLength; wordIndex += 1) {
       word = wordList[wordIndex];
@@ -102,9 +108,14 @@
   /**
    * [[Description]]
    */
-  WordsGenerator.prototype.generate = function () {
+  WordsGenerator.prototype.generate = function (wordList) {
+    if (typeof wordList !== 'undefined') {
+      this.analyse(wordList);
+    } else {
+      wordList    = this.wordList;
+    }
+
     var
-      wordList    = this.wordList,
       analysis    = this.analysis,
       wordNumber  = 1000,
       wordLength  = 15,
