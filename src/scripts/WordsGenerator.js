@@ -10,7 +10,6 @@
   var WordsGenerator = function (wordList) {
     this.wordList = wordList;
     this.analysis = {};
-//    this.normalizedWordListAnalysis = {};
 
     this.analyse(wordList);
   };
@@ -27,33 +26,38 @@
       wordListAnalysis  = {},
       word, wordIndex, wordListLength,
       charIndex, wordLength,
-      charCode, i, j;
+      charCode, i, j, k;
 
     for (wordIndex = 0, wordListLength = wordList.length; wordIndex < wordListLength; wordIndex += 1) {
       word = wordList[wordIndex];
       i = 0;
       j = 0;
+      k = 0;
 
       for (charIndex = 0, wordLength = word.length; charIndex < wordLength; charIndex += 1) {
         charCode = word.charCodeAt(charIndex);
-        j = charCode;
+        j = k;
+        k = charCode;
 
         if (typeof wordListAnalysis[i] === 'undefined') {
           wordListAnalysis[i] = {};
         }
 
         if (typeof wordListAnalysis[i][j] === 'undefined') {
-          wordListAnalysis[i][j] = 0;
+          wordListAnalysis[i][j] = {};
         }
 
-        wordListAnalysis[i][j] += 1;
+        if (typeof wordListAnalysis[i][j][k] === 'undefined') {
+          wordListAnalysis[i][j][k] = 0;
+        }
+
+        wordListAnalysis[i][j][k] += 1;
         i = j;
+        j = k;
       }
     }
 
-    this.analysis = wordListAnalysis;
-
-    this.normalize();
+    this.analysis = this.normalize(wordListAnalysis);
     return this.analysis;
   };
 
@@ -62,23 +66,35 @@
   /**
    * [[Description]]
    */
-  WordsGenerator.prototype.normalize = function () {
-    var tab = this.analysis;
+  WordsGenerator.prototype.normalize = function (analysis) {
+    var
+      sum, veryLeftChar, leftChar,
+      i, j, k;
 
-    var sum, tab1, tab2;
-    var i, j;
-    for (i in tab) {
-      tab1 = tab[i];
+
+    for (i in analysis) {
+      veryLeftChar = analysis[i];
       sum = 0;
 
-      for (j in tab1) {
-        sum += tab1[j];
+      for (j in veryLeftChar) {
+        leftChar = veryLeftChar[j];
+
+        for (k in leftChar) {
+          sum += veryLeftChar[j][k];
+        }
       }
 
-      for (j in tab1) {
-        tab1[j] /= sum;
+
+      for (j in veryLeftChar) {
+        leftChar = veryLeftChar[j];
+
+        for (k in leftChar) {
+          veryLeftChar[j][k] /= sum;
+        }
       }
     }
+
+    return analysis;
   };
 
 
@@ -88,40 +104,49 @@
    */
   WordsGenerator.prototype.generate = function () {
     var
-      wordListAnalysis = this.analysis,
-      wordNumber = 100,
-      wordLength = 6,
+      analysis    = this.analysis,
+      wordNumber  = 100,
+      wordLength  = 20,
       newWordList = [],
+      uniqueNewWordList = [],
       newWord, nextChar, rnd, charWeight,
-      i, j;
+      charPosition, i, j;
 
     while ((wordNumber -= 1) >= 0) {
       newWord = '';
       nextChar = 0;
+      i = 0;
+      j = 0;
 
-      for (i = 0; i < wordLength; i += 1) {
+      for (charPosition = 0; charPosition < wordLength; charPosition += 1) {
         rnd = Math.random();
 
-        if (!wordListAnalysis[nextChar]) {
+        if (!analysis[nextChar]) {
           break;
         }
 
-        for (j in  wordListAnalysis[nextChar]) {
-          charWeight = wordListAnalysis[nextChar][j];
+        for (j in  analysis[nextChar][i]) {
+          charWeight = analysis[nextChar][i][j];
           rnd -= charWeight;
           if (rnd <= 0) {
-            nextChar = j;
             break;
           }
         }
 
-        newWord += String.fromCharCode(nextChar);
+        newWord += String.fromCharCode(j);
+
+        nextChar = i;
+        i = j;
       }
 
       newWordList.push(newWord);
     }
 
-    return newWordList;
+    uniqueNewWordList = newWordList.filter(function(item, pos){
+      return newWordList.indexOf(item)== pos;
+    })
+
+    return uniqueNewWordList;
   };
 
 
