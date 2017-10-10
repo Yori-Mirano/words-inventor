@@ -9,7 +9,7 @@
     wordListEl    = document.getElementById('word-list'),
     newWordListEl = document.getElementById('new-word-list'),
     wordsInventor = new WordsInventor(),
-    wordListText,
+    wordListText, oldWordListText,
     wordList,
     newWordList,
     invent,
@@ -18,13 +18,18 @@
 
   invent = function () {
     wordListText  = wordListEl.value;
-    wordList      = wordListText.split(/[\s,]+/);
-    newWordList   = wordsInventor.invent(wordList);
+
+    if (wordListText != oldWordListText) {
+      oldWordListText = wordListText;
+      wordList        = wordListText.split(/[\s,]+/);
+      wordsInventor.analyse(wordList);
+    }
+
+    newWordList   = wordsInventor.invent();
     newWordListEl
       .innerHTML  = newWordList.join('\n');
 
-    console.log(wordList);
-    console.log(newWordList);
+    newWordListEl.scrollLeft = newWordListEl.scrollWidth;
   };
 
 

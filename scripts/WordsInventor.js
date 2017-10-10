@@ -8,8 +8,10 @@
    * @param {[[Type]]} wordList [[Description]]
    */
   var WordsInventor = function (wordList) {
-    this.wordList = wordList || [];
-    this.analysis = {};
+    this.oldWordList  = null;
+    this.wordList     = wordList || [];
+    this.analysis     = {};
+    this.invented     = [];
 
     this.analyse(wordList);
   };
@@ -120,15 +122,21 @@
       wordList    = this.wordList;
     }
 
+    if (this.wordList !== this.oldWordList) {
+      this.invented = [];
+      this.oldWordList = this.wordList;
+    }
+
     var
       analysis    = this.analysis,
       wordNumber  = 1000,
-      wordLength  = 15,
-      newWordList = [],
+      wordLength  = 10,
+      newWordList = this.invented,
       uniqueNewWordList = [],
-      newNewWordList = [],
+      newNewWordList    = [],
       newWord, nextChar, rnd, charWeight,
       charPosition, i, j;
+
 
     while (wordNumber >= 0) {
       newWord = '';
@@ -175,7 +183,9 @@
       return wordList.indexOf(item) === -1;
     });
 
-    return newNewWordList;
+    this.invented = newNewWordList;
+
+    return this.invented;
   };
 
 
