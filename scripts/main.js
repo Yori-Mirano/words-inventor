@@ -21,7 +21,7 @@
 
     if (wordListText != oldWordListText) {
       oldWordListText = wordListText;
-      wordList        = wordListText.split(/[\s,]+/);
+      wordList        = wordListText.split(/[\s,.;"'*\-+=&²0-1(){}[\]]+/);
       wordsInventor.analyse(wordList);
     }
 

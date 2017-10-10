@@ -1,13 +1,18 @@
 (function () {
   'use strict';
 
+  var
+    WordsInventor,
+    _normalize,
+    _filterUniqueItems,
+    _filterNewItems;
 
 
   /**
    * [[Description]]
    * @param {[[Type]]} wordList [[Description]]
    */
-  var WordsInventor = function (wordList) {
+  WordsInventor = function (wordList) {
     this.oldWordList  = null;
     this.wordList     = wordList || [];
     this.analysis     = {};
@@ -35,9 +40,10 @@
       charIndex, wordLength,
       charCode, i, j, k;
 
+    wordList = _filterUniqueItems(wordList);
 
     for (wordIndex = 0, wordListLength = wordList.length; wordIndex < wordListLength; wordIndex += 1) {
-      word = wordList[wordIndex];
+      word = wordList[wordIndex] = wordList[wordIndex].toLowerCase();
       i = 0;
       j = 0;
       k = 0;
@@ -70,44 +76,8 @@
       }
     }
 
-    this.analysis = this._normalize(wordListAnalysis);
+    this.analysis = _normalize(wordListAnalysis);
     return this.analysis;
-  };
-
-
-
-  /**
-   * [[Description]]
-   */
-  WordsInventor.prototype._normalize = function (analysis) {
-    var
-      sum, veryLeftChar, leftChar,
-      i, j, k;
-
-
-    for (i in analysis) {
-      veryLeftChar = analysis[i];
-      sum = 0;
-
-      for (j in veryLeftChar) {
-        leftChar = veryLeftChar[j];
-
-        for (k in leftChar) {
-          sum += veryLeftChar[j][k];
-        }
-      }
-
-
-      for (j in veryLeftChar) {
-        leftChar = veryLeftChar[j];
-
-        for (k in leftChar) {
-          veryLeftChar[j][k] /= sum;
-        }
-      }
-    }
-
-    return analysis;
   };
 
 
@@ -175,18 +145,82 @@
       }
     }
 
-    uniqueNewWordList = newWordList.filter(function (item, pos) {
-      return newWordList.indexOf(item) === pos;
-    });
-
-    newNewWordList = uniqueNewWordList.filter(function (item, pos) {
-      return wordList.indexOf(item) === -1;
-    });
+    uniqueNewWordList = _filterUniqueItems(newWordList);
+    newNewWordList    = _filterNewItems(wordList, uniqueNewWordList);
 
     this.invented = newNewWordList;
 
     return this.invented;
   };
+
+
+
+
+  /**
+   * [[Description]]
+   */
+  _normalize = function (analysis) {
+    var
+      sum, veryLeftChar, leftChar,
+      i, j, k;
+
+
+    for (i in analysis) {
+      veryLeftChar = analysis[i];
+      sum = 0;
+
+      for (j in veryLeftChar) {
+        leftChar = veryLeftChar[j];
+
+        for (k in leftChar) {
+          sum += veryLeftChar[j][k];
+        }
+      }
+
+
+      for (j in veryLeftChar) {
+        leftChar = veryLeftChar[j];
+
+        for (k in leftChar) {
+          veryLeftChar[j][k] /= sum;
+        }
+      }
+    }
+
+    return analysis;
+  };
+
+
+
+  /**
+   * [[Description]]
+   * @private
+   * @param   {Array} arrayToFilter [[Description]]
+   * @returns {Array} [[Description]]
+   */
+  _filterUniqueItems = function (arrayToFilter) {
+    var filteredArray = arrayToFilter.filter(function (item, pos) {
+      return arrayToFilter.indexOf(item) === pos;
+    });
+
+    return filteredArray;
+  };
+
+
+  /**
+   * [[Description]]
+   * @private
+   * @param   {Array} oldArray [[Description]]
+   * @param   {Array} newArray [[Description]]
+   * @returns {Array} [[Description]]
+   */
+  _filterNewItems = function (oldArray, newArray) {
+    var filteredArray = newArray.filter(function (item, pos) {
+      return oldArray.indexOf(item) === -1;
+    });
+
+    return filteredArray;
+  }
 
 
 
