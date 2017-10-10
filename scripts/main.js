@@ -15,6 +15,9 @@
     invent,
     focusAtEnd;
 
+  if (localStorage.wordListText) {
+    wordListEl.value = localStorage.wordListText;
+  }
 
   invent = function () {
     wordListText  = wordListEl.value;
@@ -23,6 +26,7 @@
       oldWordListText = wordListText;
       wordList        = wordListText.split(/[\s,.;"'*\-+=&²0-1(){}[\]]+/);
       wordsInventor.analyse(wordList);
+      localStorage.wordListText = wordListText;
     }
 
     newWordList   = wordsInventor.invent();
