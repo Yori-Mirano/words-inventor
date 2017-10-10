@@ -99,7 +99,7 @@
 
     var
       analysis    = this.analysis,
-      wordNumber  = 1000,
+      wordNumber  = 250,
       wordLength  = 10,
       newWordList = this.invented,
       uniqueNewWordList = [],
@@ -164,19 +164,14 @@
 
     for (i in analysis) {
       veryLeftChar = analysis[i];
-      sum = 0;
 
       for (j in veryLeftChar) {
         leftChar = veryLeftChar[j];
+        sum = 0;
 
         for (k in leftChar) {
           sum += veryLeftChar[j][k];
         }
-      }
-
-
-      for (j in veryLeftChar) {
-        leftChar = veryLeftChar[j];
 
         for (k in leftChar) {
           veryLeftChar[j][k] /= sum;

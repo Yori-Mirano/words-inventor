@@ -33,21 +33,21 @@ header > .icon {
 #container {
   display:  flex;
   position: absolute;
-  top: 64px;
+  top:    64px;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left:   0;
+  right:  0;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 520px) {
   header {
-    font-size: 1.1rem;
-    line-height: 48px;
+    font-size:    1.1rem;
+    line-height:  48px;
   }
 
   #container {
     display:  flex;
-    height:   calc(100vh - 48px);
+    top:      48px;
   }
 }
 
@@ -59,7 +59,7 @@ header > .icon {
 }
 
 
-@media (max-width: 400px) {
+@media (orientation: portrait) {
   #container      { flex-direction: column; }
   #container > *  { height: 50vh; }
 }
@@ -67,12 +67,12 @@ header > .icon {
 
 
 #word-list {
-  background: #fff;
-  color:      #03A9F4;
-  border:     none;
-  outline:    none;
+  background:   #fff;
+  color:        #03A9F4;
+  border:       none;
+  outline:      none;
   word-spacing: 1em;
-  line-height: 1.5em;
+  line-height:  1.5em;
 }
 
 
