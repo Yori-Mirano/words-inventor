@@ -3,10 +3,10 @@
 
   var
     WordsInventor,
-    _normalize,
-    _filterUniqueItems,
-    _filterNewItems,
-    _toLowerCaseAll;
+    normalize,
+    filterUniqueItems,
+    filterNewItems,
+    toLowerCaseAll;
 
 
   /**
@@ -39,8 +39,8 @@
       charIndex, wordLength,
       charCode, i, j, k;
 
-    _toLowerCaseAll(this.wordList);
-    wordList = this.wordList = _filterUniqueItems(this.wordList);
+    toLowerCaseAll(this.wordList);
+    wordList = this.wordList = filterUniqueItems(this.wordList);
 
     for (wordIndex = 0, wordListLength = wordList.length; wordIndex < wordListLength; wordIndex += 1) {
       word = wordList[wordIndex];
@@ -76,7 +76,7 @@
       }
     }
 
-    this.analysis = _normalize(wordListAnalysis);
+    this.analysis = normalize(wordListAnalysis);
     return this.analysis;
   };
 
@@ -144,8 +144,8 @@
       }
     }
 
-    uniqueNewWordList = _filterUniqueItems(newWordList);
-    this.invented     = _filterNewItems(wordList, uniqueNewWordList);
+    uniqueNewWordList = filterUniqueItems(newWordList);
+    this.invented     = filterNewItems(wordList, uniqueNewWordList);
 
     return this.invented;
   };
@@ -156,7 +156,7 @@
   /**
    * [[Description]]
    */
-  _normalize = function (analysis) {
+  normalize = function (analysis) {
     var
       sum, veryLeftChar, leftChar,
       i, j, k;
@@ -190,7 +190,7 @@
    * @param   {Array} arrayToFilter [[Description]]
    * @returns {Array} [[Description]]
    */
-  _filterUniqueItems = function (arrayToFilter) {
+  filterUniqueItems = function (arrayToFilter) {
     var filteredArray = arrayToFilter.filter(function (item, pos) {
       return arrayToFilter.indexOf(item) === pos;
     });
@@ -206,7 +206,7 @@
    * @param   {Array} newArray [[Description]]
    * @returns {Array} [[Description]]
    */
-  _filterNewItems = function (oldArray, newArray) {
+  filterNewItems = function (oldArray, newArray) {
     var filteredArray = newArray.filter(function (item, pos) {
       return oldArray.indexOf(item) === -1;
     });
@@ -220,7 +220,7 @@
    * @private
    * @param {Array} arrayToConvert [[Description]]
    */
-  _toLowerCaseAll = function (arrayToConvert) {
+  toLowerCaseAll = function (arrayToConvert) {
     var i, l;
 
     for (i = 0, l = arrayToConvert.length; i < l; i += 1) {
