@@ -5,7 +5,8 @@
     WordsInventor,
     _normalize,
     _filterUniqueItems,
-    _filterNewItems;
+    _filterNewItems,
+    _toLowerCaseAll;
 
 
   /**
@@ -30,8 +31,6 @@
   WordsInventor.prototype.analyse = function (wordList) {
     if (typeof wordList !== 'undefined') {
       this.wordList = wordList;
-    } else {
-      wordList = this.wordList;
     }
 
     var
@@ -40,10 +39,11 @@
       charIndex, wordLength,
       charCode, i, j, k;
 
-    wordList = _filterUniqueItems(wordList);
+    _toLowerCaseAll(this.wordList);
+    wordList = this.wordList = _filterUniqueItems(this.wordList);
 
     for (wordIndex = 0, wordListLength = wordList.length; wordIndex < wordListLength; wordIndex += 1) {
-      word = wordList[wordIndex] = wordList[wordIndex].toLowerCase();
+      word = wordList[wordIndex];
       i = 0;
       j = 0;
       k = 0;
@@ -103,7 +103,6 @@
       wordLength  = 10,
       newWordList = this.invented,
       uniqueNewWordList = [],
-      newNewWordList    = [],
       newWord, nextChar, rnd, charWeight,
       charPosition, i, j;
 
@@ -146,9 +145,7 @@
     }
 
     uniqueNewWordList = _filterUniqueItems(newWordList);
-    newNewWordList    = _filterNewItems(wordList, uniqueNewWordList);
-
-    this.invented = newNewWordList;
+    this.invented     = _filterNewItems(wordList, uniqueNewWordList);
 
     return this.invented;
   };
@@ -221,6 +218,20 @@
 
     return filteredArray;
   }
+
+
+  /**
+   * [[Description]]
+   * @private
+   * @param {Array} arrayToConvert [[Description]]
+   */
+  _toLowerCaseAll = function (arrayToConvert) {
+    var i, l;
+
+    for (i = 0, l = arrayToConvert.length; i < l; i += 1) {
+      arrayToConvert[i] = arrayToConvert[i].toLowerCase();
+    }
+  };
 
 
 
