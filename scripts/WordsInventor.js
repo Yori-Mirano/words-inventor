@@ -40,8 +40,13 @@
       j = 0;
       k = 0;
 
-      for (charIndex = 0, wordLength = word.length; charIndex < wordLength; charIndex += 1) {
-        charCode = word.charCodeAt(charIndex);
+      for (charIndex = 0, wordLength = word.length; charIndex <= wordLength; charIndex += 1) {
+        if (charIndex < wordLength) {
+          charCode = word.charCodeAt(charIndex);
+        } else {
+          charCode = 0;
+        }
+
         j = k;
         k = charCode;
 
@@ -63,7 +68,7 @@
       }
     }
 
-    this.analysis = this.normalize(wordListAnalysis);
+    this.analysis = this._normalize(wordListAnalysis);
     return this.analysis;
   };
 
@@ -72,7 +77,7 @@
   /**
    * [[Description]]
    */
-  WordsInventor.prototype.normalize = function (analysis) {
+  WordsInventor.prototype._normalize = function (analysis) {
     var
       sum, veryLeftChar, leftChar,
       i, j, k;
@@ -146,7 +151,9 @@
           }
         }
 
-        newWord += String.fromCharCode(j);
+        if (j != 0) {
+          newWord += String.fromCharCode(j);
+        }
 
         nextChar = i;
         i = j;
@@ -160,13 +167,13 @@
       }
     }
 
-    uniqueNewWordList = newWordList.filter(function(item, pos){
-      return newWordList.indexOf(item) == pos;
-    })
+    uniqueNewWordList = newWordList.filter(function (item, pos) {
+      return newWordList.indexOf(item) === pos;
+    });
 
-    newNewWordList = uniqueNewWordList.filter(function(item, pos){
-      return wordList.indexOf(item) == -1;
-    })
+    newNewWordList = uniqueNewWordList.filter(function (item, pos) {
+      return wordList.indexOf(item) === -1;
+    });
 
     return newNewWordList;
   };

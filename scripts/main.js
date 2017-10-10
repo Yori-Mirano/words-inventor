@@ -22,6 +22,9 @@
     newWordList   = wordsInventor.invent(wordList);
     newWordListEl
       .innerHTML  = newWordList.join('\n');
+
+    console.log(wordList);
+    console.log(newWordList);
   };
 
 
