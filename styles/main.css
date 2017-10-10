@@ -22,12 +22,13 @@ header {
   font-size:    2rem;
   font-weight:  lighter;
   box-shadow:   0 0 10px rgba(0,0,0,0.5);
-  z-index:      1;
+  z-index:      10;
 }
 
 header > .icon {
-  font-size: 1.5em;
+  font-size:      1.5em;
   vertical-align: sub;
+  padding-right:  0.25em;
 }
 
 #container {
@@ -74,6 +75,8 @@ header > .icon {
   word-spacing: 1em;
   line-height:  1.5em;
   resize:       none;
+  box-shadow:   0 0 16px rgba(0,0,0,0.2);
+  z-index:      1;
 }
 
 
@@ -81,7 +84,7 @@ header > .icon {
   flex:         2;
   background:   #f4f4f4;
   white-space:  pre-line;
-  column-width: 130px;
+  column-width: 100px;
   column-fill:  auto;
 }
 
