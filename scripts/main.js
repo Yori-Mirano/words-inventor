@@ -8,6 +8,7 @@
   var
     wordListEl    = document.getElementById('word-list'),
     newWordListEl = document.getElementById('new-word-list'),
+    mainButtonEl  = document.getElementById('main-button'),
     wordsInventor = new WordsInventor(),
     wordListText, oldWordListText,
     wordList,
@@ -46,6 +47,7 @@
 
 
   wordListEl.addEventListener('keyup', invent);
+  mainButtonEl.addEventListener('click', invent);
   invent();
 
   focusAtEnd(wordListEl);
