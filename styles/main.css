@@ -42,7 +42,7 @@ header > .icon {
 
 @media (max-width: 520px) {
   header {
-    font-size:    1.1rem;
+    font-size:    1.2rem;
     line-height:  48px;
   }
 
@@ -60,7 +60,7 @@ header > .icon {
 }
 
 
-@media (orientation: portrait) {
+@media (max-aspect-ratio: 5/4) {
   #container      { flex-direction: column; }
   #container > *  { height: 50vh; }
 }
@@ -68,6 +68,7 @@ header > .icon {
 
 
 #word-list {
+  flex:         1;
   background:   #fff;
   color:        #03A9F4;
   border:       none;
@@ -81,7 +82,7 @@ header > .icon {
 
 
 #new-word-list {
-  flex:         2;
+  flex:         1.6;
   background:   #f4f4f4;
   white-space:  pre-line;
   column-width: 100px;

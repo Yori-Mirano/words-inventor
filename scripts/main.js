@@ -23,7 +23,7 @@
 
 
   invent = function () {
-    wordListText  = wordListEl.value;
+    wordListText = wordListEl.value;
 
     if (wordListText !== oldWordListText) {
       oldWordListText = wordListText;
@@ -32,9 +32,8 @@
       localStorage.wordListText = wordListText;
     }
 
-    newWordList   = wordsInventor.invent();
-    newWordListEl
-      .innerHTML  = newWordList.join('\n');
+    newWordList             = wordsInventor.invent();
+    newWordListEl.innerHTML = newWordList.join('\n');
 
     requestAnimationFrame(function () {
       Utils.scrollToEnd(newWordListEl, 0.2);
@@ -48,7 +47,6 @@
   invent();
 
   Utils.applyHorizontalScrolling(newWordListEl);
-
   Utils.focusAtEnd(wordListEl);
 
 }());

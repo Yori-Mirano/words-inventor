@@ -18,6 +18,7 @@
     this.wordList     = wordList || [];
     this.analysis     = {};
     this.invented     = [];
+    this.maxWordLength = 0;
 
     this.analyse(wordList);
   };
@@ -43,12 +44,17 @@
     wordList = this.wordList = filterUniqueItems(this.wordList);
 
     for (wordIndex = 0, wordListLength = wordList.length; wordIndex < wordListLength; wordIndex += 1) {
-      word = wordList[wordIndex];
+      word       = wordList[wordIndex];
+      wordLength = word.length;
       i = 0;
       j = 0;
       k = 0;
 
-      for (charIndex = 0, wordLength = word.length; charIndex <= wordLength; charIndex += 1) {
+      if (wordLength > this.maxWordLength) {
+        this.maxWordLength = wordLength;
+      }
+
+      for (charIndex = 0; charIndex <= wordLength; charIndex += 1) {
         if (charIndex < wordLength) {
           charCode = word.charCodeAt(charIndex);
         } else {
@@ -75,7 +81,6 @@
         j = k;
       }
     }
-
     this.analysis = normalize(wordListAnalysis);
     return this.analysis;
   };
@@ -100,7 +105,7 @@
     var
       analysis    = this.analysis,
       wordNumber  = 250,
-      wordLength  = 10,
+      wordLength  = this.maxWordLength,
       newWordList = this.invented,
       uniqueNewWordList = [],
       newWord, nextChar, rnd, charWeight,
