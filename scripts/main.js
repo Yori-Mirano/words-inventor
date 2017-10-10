@@ -16,12 +16,6 @@
     invent;
 
 
-  if (localStorage.wordListText) {
-    wordListEl.value = localStorage.wordListText;
-  }
-
-
-
   invent = function () {
     wordListText = wordListEl.value;
 
@@ -41,12 +35,28 @@
   };
 
 
-
   wordListEl.addEventListener('keyup', invent);
   mainButtonEl.addEventListener('click', invent);
-  invent();
-
   Utils.applyHorizontalScrolling(newWordListEl);
-  Utils.focusAtEnd(wordListEl);
+
+
+
+  if (localStorage.wordListText) {
+    wordListEl.value = localStorage.wordListText;
+    Utils.focusAtEnd(wordListEl);
+    invent();
+
+  } else {
+    var client = new XMLHttpRequest();
+    client.open('GET', 'data/example.txt');
+    client.onreadystatechange = function() {
+      if (client.readyState === 4){
+        wordListEl.value = client.responseText;
+        Utils.focusAtEnd(wordListEl);
+        invent();
+      }
+    }
+    client.send();
+  }
 
 }());

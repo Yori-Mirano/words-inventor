@@ -1,3 +1,7 @@
+/*global
+    console
+*/
+
 (function () {
   'use strict';
 
@@ -14,11 +18,11 @@
    * @param {[[Type]]} wordList [[Description]]
    */
   WordsInventor = function (wordList) {
-    this.oldWordList  = null;
-    this.wordList     = wordList || [];
-    this.analysis     = {};
-    this.invented     = [];
-    this.maxWordLength = 0;
+    this.oldWordList    = null;
+    this.wordList       = wordList || [];
+    this.analysis       = {};
+    this.invented       = [];
+    this.maxWordLength  = 0;
 
     this.analyse(wordList);
   };
@@ -34,21 +38,23 @@
       this.wordList = wordList;
     }
 
-    var
-      wordListAnalysis = {},
-      word, wordIndex, wordListLength,
-      charIndex, wordLength,
-      charCode, i, j, k;
-
     toLowerCaseAll(this.wordList);
     wordList = this.wordList = filterUniqueItems(this.wordList);
 
-    for (wordIndex = 0, wordListLength = wordList.length; wordIndex < wordListLength; wordIndex += 1) {
-      word       = wordList[wordIndex];
-      wordLength = word.length;
-      i = 0;
-      j = 0;
-      k = 0;
+    this.maxWordLength = 0;
+
+    var
+      wordListAnalysis  = {},
+      wordListLength    = wordList.length,
+      wordIndex, word, wordLength, charIndex,
+      veryPreviousChar, previousChar, currentChar;
+
+    for (wordIndex = 0; wordIndex < wordListLength; wordIndex += 1) {
+      word              = wordList[wordIndex];
+      wordLength        = word.length;
+      veryPreviousChar  = 0;
+      previousChar      = 0;
+      currentChar       = 0;
 
       if (wordLength > this.maxWordLength) {
         this.maxWordLength = wordLength;
@@ -56,32 +62,31 @@
 
       for (charIndex = 0; charIndex <= wordLength; charIndex += 1) {
         if (charIndex < wordLength) {
-          charCode = word.charCodeAt(charIndex);
+          currentChar = word[charIndex];
         } else {
-          charCode = 0;
+          currentChar = 0;
         }
 
-        j = k;
-        k = charCode;
-
-        if (typeof wordListAnalysis[i] === 'undefined') {
-          wordListAnalysis[i] = {};
+        if (typeof wordListAnalysis[veryPreviousChar] === 'undefined') {
+          wordListAnalysis[veryPreviousChar] = {};
         }
 
-        if (typeof wordListAnalysis[i][j] === 'undefined') {
-          wordListAnalysis[i][j] = {};
+        if (typeof wordListAnalysis[veryPreviousChar][previousChar] === 'undefined') {
+          wordListAnalysis[veryPreviousChar][previousChar] = {};
         }
 
-        if (typeof wordListAnalysis[i][j][k] === 'undefined') {
-          wordListAnalysis[i][j][k] = 0;
+        if (typeof wordListAnalysis[veryPreviousChar][previousChar][currentChar] === 'undefined') {
+          wordListAnalysis[veryPreviousChar][previousChar][currentChar] = 0;
         }
 
-        wordListAnalysis[i][j][k] += 1;
-        i = j;
-        j = k;
+        wordListAnalysis[veryPreviousChar][previousChar][currentChar] += 1;
+        veryPreviousChar  = previousChar;
+        previousChar      = currentChar;
       }
     }
+
     this.analysis = normalize(wordListAnalysis);
+
     return this.analysis;
   };
 
@@ -98,55 +103,50 @@
     }
 
     if (this.wordList !== this.oldWordList) {
-      this.invented = [];
-      this.oldWordList = this.wordList;
+      this.invented      = [];
+      this.oldWordList   = this.wordList;
     }
 
     var
-      analysis    = this.analysis,
-      wordNumber  = 250,
-      wordLength  = this.maxWordLength,
-      newWordList = this.invented,
+      attemptCount      = 500,
+      analysis          = this.analysis,
+      wordLength        = this.maxWordLength,
+      newWordList       = this.invented,
       uniqueNewWordList = [],
-      newWord, nextChar, rnd, charWeight,
-      charPosition, i, j;
+      charIndex,
+      veryPreviousChar, previousChar,
+      nextCharList, nextChar,
+      seuil, charWeight,
+      newWord;
 
 
-    while (wordNumber >= 0) {
-      newWord = '';
-      nextChar = 0;
-      i = 0;
-      j = 0;
+    while (attemptCount >= 0) {
+      veryPreviousChar  = 0;
+      previousChar      = 0;
+      nextChar          = 0;
+      newWord           = '';
 
-      for (charPosition = 0; charPosition < wordLength; charPosition += 1) {
-        rnd = Math.random();
+      for (charIndex = 0; charIndex <= wordLength; charIndex += 1) {
+        nextCharList  = analysis[veryPreviousChar][previousChar];
+        seuil         = Math.random();
 
-        if (!analysis[nextChar] || !analysis[nextChar][i]) {
+        for (nextChar in  nextCharList) {
+          charWeight = nextCharList[nextChar];
+          seuil     -= charWeight;
+          if (seuil <= 0) { break; }
+        }
+
+        if (nextChar === '0') {
+          newWordList.push(newWord);
           break;
         }
 
-        for (j in  analysis[nextChar][i]) {
-          charWeight = analysis[nextChar][i][j];
-          rnd -= charWeight;
-          if (rnd <= 0) {
-            break;
-          }
-        }
-
-        if (j != 0) {
-          newWord += String.fromCharCode(j);
-        }
-
-        nextChar = i;
-        i = j;
+        veryPreviousChar  = previousChar;
+        previousChar      = nextChar;
+        newWord          += nextChar;
       }
 
-      if (newWord.length < wordLength) {
-        newWordList.push(newWord);
-        wordNumber -= 1;
-      } else {
-        continue;
-      }
+      attemptCount -= 1;
     }
 
     uniqueNewWordList = filterUniqueItems(newWordList);
@@ -163,23 +163,24 @@
    */
   normalize = function (analysis) {
     var
-      sum, veryLeftChar, leftChar,
-      i, j, k;
+      occurrenceSum,    veryPreviousChar,
+      previousCharList, previousChar,
+      nextCharList,     nextChar;
 
 
-    for (i in analysis) {
-      veryLeftChar = analysis[i];
+    for (veryPreviousChar in analysis) {
+      previousCharList = analysis[veryPreviousChar];
 
-      for (j in veryLeftChar) {
-        leftChar = veryLeftChar[j];
-        sum = 0;
+      for (previousChar in previousCharList) {
+        nextCharList = previousCharList[previousChar];
+        occurrenceSum = 0;
 
-        for (k in leftChar) {
-          sum += veryLeftChar[j][k];
+        for (nextChar in nextCharList) {
+          occurrenceSum += nextCharList[nextChar];
         }
 
-        for (k in leftChar) {
-          veryLeftChar[j][k] /= sum;
+        for (nextChar in nextCharList) {
+          nextCharList[nextChar] /= occurrenceSum;
         }
       }
     }
