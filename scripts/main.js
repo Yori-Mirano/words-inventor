@@ -21,7 +21,7 @@
 
     if (wordListText !== oldWordListText) {
       oldWordListText = wordListText;
-      wordList        = wordListText.split(/[\s,.;"'*\-+=&²0-1(){}\[\]]+/);
+      wordList        = wordListText.split(/[\s,.;"'*+=&0-9(){}\[\]]+/);
       wordsInventor.analyse(wordList);
       localStorage.wordListText = wordListText;
     }

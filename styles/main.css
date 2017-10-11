@@ -85,8 +85,9 @@ header > .icon {
   flex:         1.6;
   background:   #f4f4f4;
   white-space:  pre-line;
-  column-width: 100px;
+  column-width: 120px;
   column-fill:  auto;
+  white-space:  pre;
 }
 
 
@@ -116,9 +117,10 @@ header > .icon {
 
 #main-button > * {
   display: block;
+  transform: rotate(45deg);
   transition: all 200ms;
 }
 
 #main-button:hover > * {
-  transform: rotate(90deg);
+  transform: rotate(0deg);
 }
