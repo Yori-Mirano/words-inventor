@@ -110,17 +110,25 @@ header > .icon {
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
-#main-button:hover {
-  box-shadow: 0 0 8px rgba(0,0,0,0.15),
-              0 8px 16px rgba(0,0,0,0.3);
-}
-
 #main-button > * {
   display: block;
   transform: rotate(45deg);
   transition: all 200ms;
 }
 
-#main-button:hover > * {
-  transform: rotate(0deg);
+@media (hover: hover) {
+  #main-button:hover {
+    box-shadow: 0 0 8px rgba(0,0,0,0.15),
+                0 8px 16px rgba(0,0,0,0.3);
+  }
+  
+  #main-button:hover > * {
+    transform: rotate(0deg);
+  }
+}
+
+@media (hover: none) {
+  #main-button > * {
+    transform: rotate(0deg);
+  }
 }
