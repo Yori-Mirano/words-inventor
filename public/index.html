@@ -9,6 +9,12 @@
 
     <title>Machine à inventer des mots</title>
 
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="styles/main.css">
 
@@ -18,13 +24,50 @@
   </head>
 
   <body>
-    <header><i class="icon ion-code-working"></i> Machine à inventer des mots</header>
+    <input type="checkbox" id="menu-button__checkbox">
+
+    <header>
+      <label for="menu-button__checkbox">
+        <h1><i class="icon ion-navicon menu-button"></i> Machine à inventer des mots</h1>
+      </label>
+    </header>
 
     <div id="container">
-      <textarea id="word-list"></textarea>
+      <div id="main-panel">
+        <nav id="menu">
+          <h2>Paramètres</h2>
+
+          <p><em>/!\ Menu en cours de développement</em></p>
+
+          <label>
+            Premier champ<br>
+            <input type="text" placeholder="placehoder">
+          </label>
+
+          <label>
+            Deuxième champ<br>
+            <input type="text" placeholder="placehoder">
+          </label>
+
+          <label>
+            Troisième champ<br>
+            <select>
+              <option value="" selected="true">Foo</option>
+              <option value="">Bar</option>
+            </select>
+          </label>
+
+          <label>
+            Quatrième champ<br>
+            <input type="range">
+          </label>
+        </nav>
+
+        <textarea id="word-list"></textarea>
+      </div>
       <div id="new-word-list"></div>
     </div>
 
-    <div id="main-button"><i class="icon ion-ios-lightbulb-outline"></i></div>
+    <button id="main-button"><i class="icon ion-ios-lightbulb-outline"></i></button>
   </body>
 </html>
