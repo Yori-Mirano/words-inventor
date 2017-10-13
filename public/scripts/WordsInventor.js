@@ -19,7 +19,7 @@
    */
   WordsInventor = function (wordList) {
     this.oldWordList    = null;
-    this.wordList       = wordList || [];
+    this.wordList       = null;
     this.analysis       = {};
     this.invented       = [];
     this.maxWordLength  = 0;
@@ -38,54 +38,63 @@
       this.wordList = wordList;
     }
 
-    toLowerCaseAll(this.wordList);
-    wordList = this.wordList = filterUniqueItems(this.wordList);
+    if (this.wordList !== this.oldWordList) {
+      this.invented      = [];
+      this.oldWordList   = this.wordList;
 
-    this.maxWordLength = 0;
-
-    var
-      wordListAnalysis  = {},
-      wordListLength    = wordList.length,
-      wordIndex, word, wordLength, charIndex,
-      veryPreviousChar, previousChar, currentChar;
-
-    for (wordIndex = 0; wordIndex < wordListLength; wordIndex += 1) {
-      word              = wordList[wordIndex];
-      wordLength        = word.length;
-      veryPreviousChar  = 0;
-      previousChar      = 0;
-      currentChar       = 0;
-
-      if (wordLength > this.maxWordLength) {
-        this.maxWordLength = wordLength;
+      if (typeof(this.wordList) === 'string') {
+        wordList = this.wordList.split(/[\s,.;"'*+=&0-9(){}\[\]]+/);
       }
 
-      for (charIndex = 0; charIndex <= wordLength; charIndex += 1) {
-        if (charIndex < wordLength) {
-          currentChar = word[charIndex];
-        } else {
-          currentChar = 0;
+      toLowerCaseAll(wordList);
+      wordList = filterUniqueItems(wordList);
+
+      this.maxWordLength = 0;
+
+      var
+        wordListAnalysis  = {},
+        wordListLength    = wordList.length,
+        wordIndex, word, wordLength, charIndex,
+        veryPreviousChar, previousChar, currentChar;
+
+      for (wordIndex = 0; wordIndex < wordListLength; wordIndex += 1) {
+        word              = wordList[wordIndex];
+        wordLength        = word.length;
+        veryPreviousChar  = 0;
+        previousChar      = 0;
+        currentChar       = 0;
+
+        if (wordLength > this.maxWordLength) {
+          this.maxWordLength = wordLength;
         }
 
-        if (typeof wordListAnalysis[veryPreviousChar] === 'undefined') {
-          wordListAnalysis[veryPreviousChar] = {};
-        }
+        for (charIndex = 0; charIndex <= wordLength; charIndex += 1) {
+          if (charIndex < wordLength) {
+            currentChar = word[charIndex];
+          } else {
+            currentChar = 0;
+          }
 
-        if (typeof wordListAnalysis[veryPreviousChar][previousChar] === 'undefined') {
-          wordListAnalysis[veryPreviousChar][previousChar] = {};
-        }
+          if (typeof wordListAnalysis[veryPreviousChar] === 'undefined') {
+            wordListAnalysis[veryPreviousChar] = {};
+          }
 
-        if (typeof wordListAnalysis[veryPreviousChar][previousChar][currentChar] === 'undefined') {
-          wordListAnalysis[veryPreviousChar][previousChar][currentChar] = 0;
-        }
+          if (typeof wordListAnalysis[veryPreviousChar][previousChar] === 'undefined') {
+            wordListAnalysis[veryPreviousChar][previousChar] = {};
+          }
 
-        wordListAnalysis[veryPreviousChar][previousChar][currentChar] += 1;
-        veryPreviousChar  = previousChar;
-        previousChar      = currentChar;
+          if (typeof wordListAnalysis[veryPreviousChar][previousChar][currentChar] === 'undefined') {
+            wordListAnalysis[veryPreviousChar][previousChar][currentChar] = 0;
+          }
+
+          wordListAnalysis[veryPreviousChar][previousChar][currentChar] += 1;
+          veryPreviousChar  = previousChar;
+          previousChar      = currentChar;
+        }
       }
+
+      this.analysis = normalize(wordListAnalysis);
     }
-
-    this.analysis = normalize(wordListAnalysis);
 
     return this.analysis;
   };
@@ -100,11 +109,6 @@
       this.analyse(wordList);
     } else {
       wordList    = this.wordList;
-    }
-
-    if (this.wordList !== this.oldWordList) {
-      this.invented      = [];
-      this.oldWordList   = this.wordList;
     }
 
     var
@@ -150,7 +154,7 @@
     }
 
     uniqueNewWordList = filterUniqueItems(newWordList);
-    this.invented     = filterNewItems(wordList, uniqueNewWordList);
+    this.invented     = filterNewItems(this.wordList, uniqueNewWordList);
 
     return this.invented;
   };

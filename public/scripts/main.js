@@ -21,12 +21,10 @@
 
     if (wordListText !== oldWordListText) {
       oldWordListText = wordListText;
-      wordList        = wordListText.split(/[\s,.;"'*+=&0-9(){}\[\]]+/);
-      wordsInventor.analyse(wordList);
       localStorage.wordListText = wordListText;
     }
 
-    newWordList             = wordsInventor.invent();
+    newWordList             = wordsInventor.invent(wordListText);
     newWordListEl.innerHTML = newWordList.join('\n');
 
     requestAnimationFrame(function () {
