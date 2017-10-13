@@ -79,19 +79,6 @@ header .menu-button {
   transform: rotate(90deg);
 }
 
-@media (max-width: 520px) {
-  header {
-    font-size:    1.1rem;
-    line-height:  48px;
-  }
-
-  header .menu-button {
-    font-size:      40px;
-    width:          48px;
-    height:         48px;
-  }
-}
-
 
 
 /***************************\
@@ -145,7 +132,7 @@ header .menu-button {
 #word-list {
   flex:         1;
   background:   #fff;
-  color:        #03A9F4;
+  color:        #1E88E5;
   border:       none;
   outline:      none;
   word-spacing: 1em;
@@ -264,13 +251,12 @@ header .menu-button {
   width:      64px;
   line-height: 64px;
   text-align: center;
-  font-size:  2.5rem;
+  font-size:  2rem;
   border:     none;
   border-radius: 100px;
   outline:    none;
   box-shadow: 0 0 6px rgba(0,0,0,0.15),
               0 6px 12px rgba(0,0,0,0.3);
-  
   transition: all 200ms;
   cursor:     pointer;
   user-select: none;
@@ -278,25 +264,24 @@ header .menu-button {
 
 #main-button > * {
   display: block;
-  transform: rotate(45deg);
+/*  transform: rotate(45deg);*/
   transition: all 200ms;
 }
 
 @media (hover: hover) {
   #main-button:hover {
+    background: #FF4081;
     box-shadow: 0 0 8px rgba(0,0,0,0.15),
                 0 8px 16px rgba(0,0,0,0.3);
   }
   
   #main-button:hover > * {
     transform:  rotate(0deg);
-    color:      #FFE082;
   }
 }
 
 @media (hover: none) {
   #main-button > * {
     transform:  rotate(0deg);
-    color:      #FFE082;
   }
 }

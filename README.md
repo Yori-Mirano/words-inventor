@@ -1,6 +1,6 @@
-# Words inventor
-...ou la machine à inventer des mots.
+![](public/android-chrome-192x192.png)
 
+# Words inventor
 Ce projet sert à alimenter l'inspiration pour trouver des noms. Que ce soit pour une application, un projet, ou même pourquoi pas un animal de compagnie.
 
 **Accès à l'application:** https://inventor.y-tournebise.com/
