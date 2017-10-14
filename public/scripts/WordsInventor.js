@@ -18,7 +18,8 @@
    * @param {[[Type]]} wordList [[Description]]
    */
   WordsInventor = function (wordList) {
-    this.oldWordList    = null;
+    this.oldWordListOrig = null;
+    this.wordListOrig   = null;
     this.wordList       = null;
     this.analysis       = {};
     this.invented       = [];
@@ -35,30 +36,30 @@
    */
   WordsInventor.prototype.analyse = function (wordList) {
     if (typeof wordList !== 'undefined') {
-      this.wordList = wordList;
+      this.wordListOrig = wordList;
     }
 
-    if (this.wordList !== this.oldWordList) {
+    if (this.wordListOrig !== this.oldWordListOrig) {
       this.invented      = [];
-      this.oldWordList   = this.wordList;
+      this.oldWordListOrig   = this.wordListOrig;
 
-      if (typeof(this.wordList) === 'string') {
-        wordList = this.wordList.split(/[\s,.;"'*+=&0-9(){}\[\]]+/);
+      if (typeof(this.wordListOrig) === 'string') {
+        this.wordList = this.wordListOrig.split(/[\s,.;"'*+=&0-9(){}\[\]]+/);
       }
 
-      toLowerCaseAll(wordList);
-      wordList = filterUniqueItems(wordList);
+      toLowerCaseAll(this.wordList);
+      this.wordList = filterUniqueItems(this.wordList);
 
       this.maxWordLength = 0;
 
       var
         wordListAnalysis  = {},
-        wordListLength    = wordList.length,
+        wordListLength    = this.wordList.length,
         wordIndex, word, wordLength, charIndex,
         veryPreviousChar, previousChar, currentChar;
 
       for (wordIndex = 0; wordIndex < wordListLength; wordIndex += 1) {
-        word              = wordList[wordIndex];
+        word              = this.wordList[wordIndex];
         wordLength        = word.length;
         veryPreviousChar  = 0;
         previousChar      = 0;
@@ -107,8 +108,6 @@
   WordsInventor.prototype.invent = function (wordList) {
     if (typeof wordList !== 'undefined') {
       this.analyse(wordList);
-    } else {
-      wordList    = this.wordList;
     }
 
     var

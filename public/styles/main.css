@@ -211,21 +211,48 @@ header .menu-button {
 /***************************\
   BOTTOM/RIGHT PANEL
 \***************************/
+body { background:   #f4f4f4; }
+
+@keyframes newWordListSlideInFromRight {
+  0%    { transform: translateX(5%);  opacity: 0; }
+  100%  { transform: translateX(0%); opacity: 1; }
+}
+
 #new-word-list {
   flex:         1.6;
-  background:   #f4f4f4;
   white-space:  pre-line;
   column-width: 120px;
   column-fill:  auto;
   white-space:  pre;
   padding:      20px;
-  transition: 200ms cubic-bezier(0.0, 0.0, 0.2, 1) flex;
+  transition:   200ms cubic-bezier(0.0, 0.0, 0.2, 1) flex;
+  animation:    400ms cubic-bezier(0.0, 0.0, 0.2, 1) 0s 1 newWordListSlideInFromRight;
 }
 
 @media (max-aspect-ratio: 5/4) and (max-width: 900px), (max-width: 900px) {
   #menu-button__checkbox:checked ~ #container #new-word-list {
     flex: 0.5;
   }
+}
+
+@keyframes messageSlideInFromBottom {
+  0%    { transform: translateY(10%); opacity: 0; }
+  100%  { transform: translateY(0);   opacity: 1; }
+}
+
+#new-word-list.new-word-list--no-result {
+  text-align:   center;
+  white-space:  normal;
+  column-width: auto;
+  color:        #ccc;
+  font-size:    1.5rem;
+  font-weight:  bold;
+  margin:       auto;
+  animation:    400ms cubic-bezier(0.0, 0.0, 0.2, 1) 0s 1 messageSlideInFromBottom;
+}
+
+#new-word-list.new-word-list--no-result .icon {
+  font-size:    7em;
 }
 
 
@@ -239,10 +266,6 @@ header .menu-button {
 }
 
 #main-button {
-  transform:  translateY(200%);
-  animation:  400ms cubic-bezier(0.0, 0.0, 0.2, 1) 400ms 1 slideInFromBottom;
-  animation-fill-mode: forwards;
-
   position:   absolute;
   background: #e91e63;
   color:      #fff;
@@ -255,24 +278,26 @@ header .menu-button {
   border:     none;
   border-radius: 100px;
   outline:    none;
-  box-shadow: 0 0 6px rgba(0,0,0,0.15),
-              0 6px 12px rgba(0,0,0,0.3);
-  transition: all 200ms;
+  box-shadow: 0 0 6px rgba(0,0,0,0.2),
+              0 6px 12px rgba(0,0,0,0.4);
+  transition: all 200ms cubic-bezier(0.0, 0.0, 0.2, 1);
   cursor:     pointer;
   user-select: none;
 }
 
 #main-button > * {
   display: block;
-/*  transform: rotate(45deg);*/
-  transition: all 200ms;
 }
 
 @media (hover: hover) {
-  #main-button:hover {
+  #main-button:not(.main-button--disabled):hover,
+  #main-button:not(.main-button--disabled):active {
+    box-shadow: 0 0 12px rgba(0,0,0,0.2),
+                0 12px 24px rgba(0,0,0,0.4);
+  }
+
+  #main-button:active {
     background: #FF4081;
-    box-shadow: 0 0 8px rgba(0,0,0,0.15),
-                0 8px 16px rgba(0,0,0,0.3);
   }
   
   #main-button:hover > * {
@@ -280,8 +305,8 @@ header .menu-button {
   }
 }
 
-@media (hover: none) {
-  #main-button > * {
-    transform:  rotate(0deg);
-  }
+#main-button.main-button--disabled {
+  transform: translateY(200%);
+  transition: all 200ms cubic-bezier(0.4, 0.0, 1, 1);
+
 }

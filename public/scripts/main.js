@@ -24,8 +24,18 @@
       localStorage.wordListText = wordListText;
     }
 
-    newWordList             = wordsInventor.invent(wordListText);
-    newWordListEl.innerHTML = newWordList.join('\n');
+    newWordList = wordsInventor.invent(wordListText);
+
+    if ((typeof newWordList !== 'undefined') && newWordList.length > 0) {
+      mainButtonEl.classList.remove('main-button--disabled');
+      newWordListEl.classList.remove('new-word-list--no-result');
+      newWordListEl.innerHTML = newWordList.join('\n');
+    } else {
+      mainButtonEl.classList.add('main-button--disabled');
+      newWordListEl.classList.add('new-word-list--no-result');
+      newWordListEl.innerHTML = "<i class=\"icon ion-compose\"></i><div>need more words to invent</div><div>(~10 minimum)</div>";
+    }
+
 
     requestAnimationFrame(function () {
       Utils.scrollToEnd(newWordListEl, 0.2);
