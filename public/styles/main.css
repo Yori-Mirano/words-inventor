@@ -104,6 +104,7 @@ header .menu-button {
   flex:       1;
   box-sizing: border-box;
   overflow:   auto;
+  height: 100%;
 }
 
 
