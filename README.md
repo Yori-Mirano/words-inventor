@@ -3,7 +3,7 @@
 # Words inventor
 Ce projet sert à alimenter l'inspiration pour trouver des noms. Que ce soit pour une application, un projet, ou même pourquoi pas un animal de compagnie.
 
-**Accès à l'application:** https://inventor.yori.mirano.fr/
+**Accès à l'application:** https://yori-mirano.github.io/words-inventor/
 
 
 ## Screenshot
